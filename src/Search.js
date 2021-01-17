@@ -2,11 +2,22 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 let timer = null;
+import githubImg from './github-1.svg';
+import { getVideo } from './actions';
 
 const Nav = styled.nav`
-    background: #ff0110;
-    padding: 5px;
+    background-color: rgb(0, 106, 166);
+    background-image: url(${githubImg});
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    padding: 5px 0;
     text-align: center;
+    height: 48px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
 `;
 
 const Search = styled.input.attrs({
@@ -15,42 +26,21 @@ const Search = styled.input.attrs({
     background: transparent;
     border: 0;
     color: #fff;
-    border-bottom: 2px solid #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, .5);
+    height: 35px;
+    width: 40%;
+    background: rgb(0, 88, 138);
 `;
 
 const Button = styled.button`
+    padding: 0 15px;
     background: transparent;
     border: 0;
     color: #fff;
+    border: 1px solid rgb(0, 88, 138);
+    border-radius: 0px 4px 4px 0px;
+    height: 35px;
 `;
-
-export const getVideo = (word, limit, ref = "", page = 1) => {
-    return (dispatch) => {
-        if (!word) return
-        dispatch({ type: "LOADING", payload: { loading: true } });
-
-        return fetch(
-            `https://api.github.com/search/repositories?q=${word}&page=${page}&per_page=${limit}`
-        )
-        .then((res) => res.json())
-        .then((json) => {
-            dispatch({ type: "LOADING", payload: { loading: false } });
-            if (!word) return;
-            if (ref && ref.current.value !== word) return;
-
-            dispatch({
-                type: "UPDATE",
-                payload: {
-                    repos: {
-                        [word]: { items: json.items },
-                    },
-                    current: word,
-                    end: json?.items.length ? false : true,
-                }
-            });
-        });
-    };
-};
 
 export default () => {
     const dispatch = useDispatch();
@@ -77,20 +67,21 @@ export default () => {
             }
 
             timer = setTimeout(() => {
-                dispatch(getVideo(word, 10, inputEl));
+                dispatch(getVideo(word, 30, inputEl));
             }, 1000);
         };
     };
 
     return (
         <Nav>
-        <Search
-            ref={inputEl}
-            value={data}
-            onChange={(e) => setData(e.target.value)}
-            onInput={(e) => dispatch(search(e.target.value))}
-        />
-        <Button onClick={() => dispatch(search(data))}>search</Button>
+
+            <Search
+                ref={inputEl}
+                value={data}
+                onChange={(e) => setData(e.target.value)}
+                onInput={(e) => dispatch(search(e.target.value))}
+            />
+            <Button onClick={() => dispatch(search(data))}>search</Button>
         </Nav>
     );
 };

@@ -11,22 +11,21 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.2);
 `;
 
 const Loading = styled.span`
     position: relative;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     animation: rotate 1s ease-in-out infinite;
 
     @keyframes rotate {
         from {
-        transform: rotate(0);
+            transform: rotate(0);
         }
 
         to {
-        transform: rotate(360deg);
+            transform: rotate(360deg);
         }
     }
 `;
@@ -61,7 +60,7 @@ const Point = styled.span`
         right: 0;
         bottom: 0;
         left: 0;
-        background: #ff0110;
+        background: rgb(0, 106, 166);;
         border-radius: 50%;
         animation: scale 0.5s ease infinite alternate;
     }

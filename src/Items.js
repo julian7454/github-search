@@ -1,53 +1,57 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { getVideo } from "./Search";
 import Loading from "./Loading";
+import Skeleton from '@material-ui/lab/Skeleton';
+import { getVideo } from './actions';
 
 const Content = styled.main`
-    padding: 0 20px;
-    display: flex;
+    padding: 60px 0 20px;
     margin: 0 auto;
-    max-width: 520px;
-    min-height: 300px;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    max-width: 720px;
+    text-align: center;
+    color: #555;
+    background: #fff;
+    min-height: 100%;
 `;
 
 const List = styled.ul`
     margin: 0 auto;
-    padding-left: 0;
+    padding: 0 10px;
     display: flex;
     list-style-type: none;
     flex-wrap: wrap;
 
     li {
-        padding: 5px;
-        flex-basis: 250px;
+        width: calc(100% / 2 - 20px);
+        padding: 10px 5px;
+        border-bottom: 1px solid rgb(233, 233, 233);
+
+        a {
+            display: flex;
+            color: #555;
+            text-decoration: none;
+        }
 
         p {
             overflow: hidden;
+            width: calc(100% - 165px);
             white-space: nowrap;
             text-overflow: ellipsis;
-            width: 200px;
-        }
-        @media (max-width: 530px) {
-            flex-basis: 45%;
-            p {
-                width: 150px;
-            }
-        }
-        @media (max-width: 375px) {
-            flex-basis: 80%;
-            p {
-                width: 300px;
-            }
+            padding-left: 15px;
+            margin-top: 30px;
+            text-align: left;
         }
 
+        @media (max-width: 530px) {
+            flex-basis: 100%;
+        }
+
+
         img {
-            width: 100%;
+            width: 120px;
             object-fit: cover;
+            border-radius: 6px;
         }
     }
 `;
@@ -65,7 +69,7 @@ const Button = styled.button`
 `;
 
 const Flag = styled.div`
-    height: 300px;
+    height: 50px;
 `;
 
 export default () => {
@@ -80,7 +84,6 @@ export default () => {
         end: state.end,
     }));
 
-    const limit = 10;
     let currentRepos = repos[current]?.items;
 
     useEffect(() => {
@@ -115,24 +118,34 @@ export default () => {
     }, [scrolled, end]);
 
     return (
-        <div>
+        <>
             <Content>
+                {!currentRepos?.length && <p>請輸入搜尋 repo 名稱</p>}
                 <List>
                     {currentRepos?.map((item, index) => {
                         return (
-                        <li key={index}>
-                            <a href={item?.html_url}>
-                                <img src={item?.owner?.avatar_url} />
-                                <p>{item?.full_name}</p>
-                            </a>
-                        </li>
+                            <li key={index}>
+                                <a href={item?.html_url} target="_blank">
+                                    <img src={item?.owner?.avatar_url} />
+                                    <p>{item?.full_name}</p>
+                                </a>
+                            </li>
                         );
                     })}
+                    {loading && <>
+                        {[0, 1].map((item, index) => {
+                            return (
+                                <li key={index} style={{ display: 'flex' }}>
+                                    <Skeleton variant="rect" width={120} height={120} />
+                                    <p><Skeleton variant="text" width={100} height={20}/></p>
+                                </li>
+                            );
+                        })}</>
+                    }
                 </List>
-                {!currentRepos?.length && <p>請輸入搜尋 repo 名稱</p>}
+                <Flag ref={loadingRef} />
             </Content>
-            <Flag ref={loadingRef} />
-            {loading && <Loading />}
-        </div>
+            {loading && <><Skeleton /><Loading /></>}
+        </>
     );
 };
