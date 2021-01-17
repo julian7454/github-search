@@ -1,5 +1,5 @@
 # github-search
-## 運作環境
+### 運作環境
 請在 Node 10.14.2 以上環境執行
 
 ### install
