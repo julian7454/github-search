@@ -1,5 +1,6 @@
 {
   "name": "youtube-search",
+  "homepage": "https://julian7454.github.io/github-search",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
@@ -16,10 +17,13 @@
   },
   "devDependencies": {
     "@material-ui/lab": "^4.0.0-alpha.57",
+    "gh-pages": "^3.1.0",
     "react-scripts": "^4.0.1",
     "typescript": "3.3.3"
   },
   "scripts": {
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
