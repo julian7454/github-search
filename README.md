@@ -12,7 +12,7 @@ yarn start
 https://julian7454.github.io/github-search/index.html
 
 ### 設計要點
-#### Set input value automatically on a fetch request
+#### Detect changes in the text input
 - 使用 redux 做資料儲存，redux-thunk 處理非同步請求。
 - reducer 的 repos 以每次輸入的 input 當作 key，若已有輸入相同字元直接取出，沒有才發送請求。
 - 輸入階段設置 timeout, 避免過於頻繁地發出不必要的請求。
