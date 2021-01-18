@@ -1,9 +1,0 @@
-.App {
-  font-family: sans-serif;
-  text-align: center;
-}
-body { background: rgb(0, 50, 78); }
-html, body, #root { height: 100%; }
-* {
-  box-sizing: border-box;
-}
