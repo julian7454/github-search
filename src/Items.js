@@ -125,9 +125,15 @@ export default () => {
                     {currentRepos?.map((item, index) => {
                         return (
                             <li key={index}>
-                                <a href={item?.html_url} target="_blank">
-                                    <img src={item?.owner?.avatar_url} />
-                                    <p>{item?.full_name}</p>
+                                <a href={item.html_url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <img
+                                        src={item.owner?.avatar_url}
+                                        alt={item.full_name}
+                                    />
+                                    <p>{item.full_name}</p>
                                 </a>
                             </li>
                         );
