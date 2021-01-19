@@ -112,7 +112,6 @@ export default () => {
     }, [inView]);
 
     useEffect(() => {
-        //console.log(end)
         if (end) return;
         dispatch(getVideo(current, 10, '', scrolled));
     }, [scrolled, end]);
