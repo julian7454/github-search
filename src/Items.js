@@ -106,7 +106,7 @@ export default () => {
 
     useEffect(() => {
         if (inView) {
-            setScrolled(scrolled + 1);
+            setScrolled((s) => s + 1);
         }
         setInView(false);
     }, [inView]);
